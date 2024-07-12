@@ -62,9 +62,9 @@
 				<!-- Filter Options -->
 				<div class="mt-4">
 					<div class="flex justify-between mb-4">
-						<button x-model="filter" value="all" :class="{ 'bg-blue-500 text-white': filter === 'all' }" class="px-4 py-2 rounded">All</button>
-						<button x-model="filter" value="active" :class="{ 'bg-blue-500 text-white': filter === 'active' }" class="px-4 py-2 rounded">Active</button>
-						<button x-model="filter" value="completed" :class="{ 'bg-blue-500 text-white': filter === 'completed' }" class="px-4 py-2 rounded">Completed</button>
+						<button x-on:click="filter = 'all'" :class="{ 'bg-blue-500 text-white': filter === 'all' }" class="px-4 py-2 rounded">All</button>
+						<button x-on:click="filter = 'active'" :class="{ 'bg-blue-500 text-white': filter === 'active' }" class="px-4 py-2 rounded">Active</button>
+						<button x-on:click="filter = 'completed'" :class="{ 'bg-blue-500 text-white': filter === 'completed' }" class="px-4 py-2 rounded">Completed</button>
 					</div>
 				</div>
 			</div>
