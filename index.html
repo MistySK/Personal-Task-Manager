@@ -6,8 +6,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<title>Personal Task Manager</title>
 		<link href="output.css" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.9.1/dist/cdn.min.js" defer></script>
-		<script src="./src/js/taskmanager.js" defer></script> <!--link to taskmanager.js file-->
+		<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
+		<script defer src="taskManager.js"></script> <!--link to taskmanager.js file-->
 		<style>
 			[x-cloak] {
 				display: none;
@@ -20,51 +20,54 @@
 			-->
   		</header>
 
-  	<!-- Task Input Form -->	
-	  <div class="container mx-auto mt-4 p-4 bg-white rounded shadow w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
-		<div x-data="{ title: '', description: '' }">
-		<h2 class="text-xl font-bold mb-4">Add a New Task</h2>
-		<form @submit.prevent="addTask">
+		  <div x-data="taskManager()" class="container mx-auto mt-4 p-4 bg-white rounded shadow w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
+
+			<!-- Task Input Form -->
 			<div class="mb-4">
-				<label class="block text-gray-700">Task Title</label>
-				<input type="text" x-model="title" class="w-full mt-1 p-2 border rounded" required>
-			  </div>
-			  <div class="mb-4">
-				<label class="block text-gray-700">Task Description (Optional)</label>
-				<textarea x-model="description" class="w-full mt-1 p-2 border rounded"></textarea>
-			  </div>
-			  <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Add Task</button> <!-- Used w-full sm:w-auto to make the button full width on small screens and auto width on larger screens.
-			  -->
-		</form>
-		</div>
-	</div>
-
-		  <!-- Task List -->
-		  <div class="container mx-auto mt-4 p-4 bg-white rounded shadow w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
-			<h2 class="text-xl font-bold mb-4">Task List</h2>
-			<ul>
-			  <template x-for="task in filteredTasks" :key="task.id">
-				<li class="flex justify-between items-center mb-2">
-				  <div class="flex items-center">
-					<input type="checkbox" x-model="task.completed" @change="saveTasks" class="mr-2">
-					<span :class="{ 'line-through': task.completed }" x-text="task.title"></span>
-				  </div>
-				  <div class="flex">
-					<button @click="editTask(task)" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Edit</button>
-					<button @click="deleteTask(task.id)" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
-				  </div>
-				</li>
-			  </template>
-			</ul>
-		  </div>
-
-		  <!-- Filter -->
-		  <div class="container mx-auto mt-4 p-4 bg-white rounded shadow w-full md:w-3/4 lg:w-2/3 xl:w-1/2">
-			<div class="flex justify-between mb-4">
-			  <button @click="filter = 'all'" :class="{ 'bg-blue-500 text-white': filter === 'all' }" class="px-4 py-2 rounded">All</button>
-			  <button @click="filter = 'active'" :class="{ 'bg-blue-500 text-white': filter === 'active' }" class="px-4 py-2 rounded">Active</button>
-			  <button @click="filter = 'completed'" :class="{ 'bg-blue-500 text-white': filter === 'completed' }" class="px-4 py-2 rounded">Completed</button>
+				<h2 class="text-xl font-bold mb-4">Add a New Task</h2>
+				<form @submit.prevent="addTask">
+					<div class="mb-4">
+						<label class="block text-gray-700">Task Title</label>
+						<input type="text" x-model="title" class="w-full mt-1 p-2 border rounded" required>
+					</div>
+					<div class="mb-4">
+						<label class="block text-gray-700">Task Description (Optional)</label>
+						<textarea x-model="description" class="w-full mt-1 p-2 border rounded"></textarea>
+					</div>
+					<button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded w-full sm:w-auto">Add Task</button>
+				</form>
 			</div>
-		  </div>
+	
+			<!-- Task List and Filter Options -->
+			<div class="mt-4">
+				<!-- Task List -->
+				<div class="mb-4">
+					<h2 class="text-xl font-bold mb-4">Task List</h2>
+					<ul>
+						<template x-for="task in filteredTasks" :key="task.id">
+							<li class="flex justify-between items-center mb-2">
+								<div class="flex items-center">
+									<input type="checkbox" x-model="task.completed" @change="saveTasks" class="mr-2">
+									<span :class="{ 'line-through': task.completed }" x-text="task.title"></span>
+								</div>
+								<div class="flex">
+									<button @click="editTask(task)" class="bg-yellow-500 text-white px-2 py-1 rounded mr-2">Edit</button>
+									<button @click="deleteTask(task.id)" class="bg-red-500 text-white px-2 py-1 rounded">Delete</button>
+								</div>
+							</li>
+						</template>
+					</ul>
+				</div>
+	
+				<!-- Filter Options -->
+				<div class="mt-4">
+					<div class="flex justify-between mb-4">
+						<button x-model="filter" value="all" :class="{ 'bg-blue-500 text-white': filter === 'all' }" class="px-4 py-2 rounded">All</button>
+						<button x-model="filter" value="active" :class="{ 'bg-blue-500 text-white': filter === 'active' }" class="px-4 py-2 rounded">Active</button>
+						<button x-model="filter" value="completed" :class="{ 'bg-blue-500 text-white': filter === 'completed' }" class="px-4 py-2 rounded">Completed</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
-</html>
+	</html>
